@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -41,7 +41,7 @@ function App() {
   //       setMovies(transformedMovies);
   //     });
   // };
-    const fetchMovieHandler = async() => {
+    const fetchMovieHandler = useCallback(async() => {
       //2nd way to handle promises via async/await
         // An API call that is fetch, calls to preset DB which is start wars and from https://swapi.dev/ website
           // Sends in an object via the second parameter to send in such things as the method type as GET or POST and other information.
@@ -89,7 +89,11 @@ function App() {
     // after the async calls above, there should be no more loading which is why setIsLoading is set to false
       // Due to try catch if there is an error or not, setIsLoading will stop the loading of the page and set to false from true in try statement
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchMovieHandler();
+  },[fetchMovieHandler]);
 
   //console.log(movies);
   // const dummyMovies = [
